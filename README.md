@@ -128,11 +128,17 @@ build.yaml이 있는 디렉토리에서 수행
   ```
   kubectl create secret docker-registry dockerhub --docker-server=docker.io --docker-username={userid} --docker-password={password}
   ```
- 
-- MySQL배포
+
+- helm 저장소 추가
+  bitnami helm chart 저장소가 추가 안되어 있으면 수행하세요.  
   ```
   helm repo add bitnami https://charts.bitnami.com/bitnami 
   helm repo update
+  ```
+  
+- MySQL배포
+
+  ```
   helm upgrade mysql -i -f mysql.yaml bitnami/mysql  
   ```
 
