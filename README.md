@@ -8,6 +8,7 @@ Docker, Docker Compose, Kubectl이 설치된 작업 머신에 배포 가이드�
 ```
 mkdir -p ~/install && cd ~/install
 git clone https://github.com/cna-bootcamp/subride-deploy.git
+cd subride-deploy
 ```
 
 ## 내용 수정
@@ -17,12 +18,12 @@ git clone https://github.com/cna-bootcamp/subride-deploy.git
 > Tip  
   사실 이 변수는 로컬에서 container로 실행할 때 필요한 값이라, k8s배포만 한다면 수정 안해도 됨.  
 
-### build-jar.yml: Jar생성 정의 파일
+### build-jar.yaml: Jar생성 정의 파일
 Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 생성하는   
 정의 파일입니다.   
 이 파일에서 수정할 내용은 없습니다.   
 
-### build.yml: Image 빌드 및 Container 배포 정의 파일  
+### build.yaml: Image 빌드 및 Container 배포 정의 파일  
 이 파일에는 Container image를 빌드하고, 현재 머신에 container로 application을 실행하는   
 방법이 정의되어 있습니다.   
 우리는 k8s에서 배포할 것이므로 image 빌드 부분만 사용합니다.   
@@ -80,7 +81,7 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
     - ConfigMap의 'ALLOWED_ORIGINS'. Backend application에 API를 요청하는 Front 주소. CORS설정을 위해 필요.   
 
 ## Jar파일 Build
-build-jar.yml이 있는 디렉토리로 이동하여 수행   
+build-jar.yaml이 있는 디렉토리로 이동하여 수행   
 
 먼저 Spring Cloud 프로젝트, Subride backend, Subride frontend 소스를 clone합니다.   
 ```
@@ -98,7 +99,7 @@ docker-compose -f build-jar.yaml up
 
 ## Container image Build/Push
 
-build.yml이 있는 디렉토리에서 수행   
+build.yaml이 있는 디렉토리에서 수행   
 - Build image
   ```
   docker-compose -f build.yaml build
@@ -108,7 +109,7 @@ build.yml이 있는 디렉토리에서 수행
   docker login 
   docker-compose -f build.yaml push
   ```
-> Tip: 서비스명은 docker-compose.yml의 'service'섹션 하위에 정의된 이름 사용   
+> Tip: 서비스명은 build.yaml의 'service'섹션 하위에 정의된 이름 사용   
   - 특정 서비스만 build: docker-compose -f build.yaml build {서비스명}  
   - 특정 서비스만 push: docker-compose -f build.yaml push {서비스명}  
 
