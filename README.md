@@ -17,24 +17,24 @@ git clone https://github.com/cna-bootcamp/subride-deploy.git
 > Tip  
   사실 이 변수는 로컬에서 container로 실행할 때 필요한 값이라, k8s배포만 한다면 수정 안해도 됨.  
 
-### build.yml: Jar생성 정의 파일
+### build-jar.yml: Jar생성 정의 파일
 Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 생성하는   
 정의 파일입니다.   
 이 파일에서 수정할 내용은 없습니다.   
 
-### docker-compose.yml: Image 빌드 및 Container 배포 정의 파일  
+### build.yml: Image 빌드 및 Container 배포 정의 파일  
 이 파일에는 Container image를 빌드하고, 현재 머신에 container로 application을 실행하는   
 방법이 정의되어 있습니다.   
 우리는 k8s에서 배포할 것이므로 image 빌드 부분만 사용합니다.   
 
 - 공통 수정 내용: image 경로를 본인의 것으로 변경  
   ```  
-  sed -i'' "s@docker.io/hiondal@docker.io/gappa@g" docker-compose.yaml
+  sed -i'' "s@docker.io/hiondal@docker.io/gappa@g" build.yaml
   ```
   
   image tag명도 필요시 변경합니다.  
   ``` 
-  sed -i'' "s@image: .*:2.0.0@image: .*:1.0.0@g" docker-compose.yaml
+  sed -i'' "s@image: .*:2.0.0@image: .*:1.0.0@g" build.yaml
   ```
 
 
@@ -80,7 +80,7 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
     - ConfigMap의 'ALLOWED_ORIGINS'. Backend application에 API를 요청하는 Front 주소. CORS설정을 위해 필요.   
 
 ## Jar파일 Build
-build.yml이 있는 디렉토리로 이동하여 수행   
+build-jar.yml이 있는 디렉토리로 이동하여 수행   
 
 먼저 Spring Cloud 프로젝트, Subride backend, Subride frontend 소스를 clone합니다.   
 ```
@@ -93,24 +93,24 @@ git clone https://github.com/cna-bootcamp/subride-front.git
 
 jar파일을 생성합니다.  
 ```
-docker-compose -f build.yml up
+docker-compose -f build-jar.yaml up
 ```
 
 ## Container image Build/Push
 
-docker-compose.yml이 있는 디렉토리에서 수행   
+build.yml이 있는 디렉토리에서 수행   
 - Build image
   ```
-  docker-compose build
+  docker-compose -f build.yaml build
   ```
 - Push image
   ```
   docker login 
-  docker-compose push
+  docker-compose -f build.yaml push
   ```
 > Tip: 서비스명은 docker-compose.yml의 'service'섹션 하위에 정의된 이름 사용   
-  - 특정 서비스만 build: docker-compose build {서비스명}  
-  - 특정 서비스만 push: docker-compose push {서비스명}  
+  - 특정 서비스만 build: docker-compose -f build.yaml build {서비스명}  
+  - 특정 서비스만 push: docker-compose -f build.yaml push {서비스명}  
 
 ## k8s에 배포
 - namespace 생성 또는 이동  
@@ -122,6 +122,7 @@ docker-compose.yml이 있는 디렉토리에서 수행
   ```
   kubectl create secret docker-registry dockerhub --docker-server=docker.io --docker-username={userid} --docker-password={password}
   ```
+ 
 - MySQL배포
   ```
   helm repo add bitnami https://charts.bitnami.com/bitnami 
@@ -147,4 +148,13 @@ docker-compose.yml이 있는 디렉토리에서 수행
 
   브라우저에서 Frontend 주소로 접근하여 확인합니다.  
 
+## 배포 객체 삭제 
+아래 명령으로 모든 객체를 삭제 합니다.  
+```
+cd ~/install/subride-deploy
+
+helm delete mysql
+kubectl delete -f deploy/rabbitmq.yaml
+kubectl delete -f deploy/subride  
+```
 
