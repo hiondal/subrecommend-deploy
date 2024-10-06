@@ -164,13 +164,35 @@ build.yaml이 있는 디렉토리에서 수행
   kubectl apply -f deploy/subride
   ```
 
-- 확인 및 테스트   
+- 파드 상태 확인     
   모든 pod가 실행될때까지 기다립니다.   
   ```
   watch kubectl get po
   ``` 
 
-  브라우저에서 Frontend 주소로 접근하여 확인합니다.  
+- 테스트
+  - /etc/hosts등록
+    만약 DNS에 ingress host를 등록하지 못한다면, 로컬PC의 /etc/hosts파일에 주소를 등록해야 합니다.
+    아래 예제를 참고하여 등록합니다.
+    IP는 k8s cluster를 접근할 수 있는 Public IP이어야 합니다.
+    k8s node가 외부에 오픈되어 있다면 k8s노드 중 아무 노드의 IP를 입력하고,
+    proxy서버를 통해 k8s cluster를 접근하는 경우는 Proxy서버의 IP를 지정하여야 합니다.    
+    ```
+    18.141.104.160 subride-front.msa.edutdc.com scg.msa.edutdc.com config.msa.edutdc.com eureka.msa.edutdc.com
+    18.141.104.160 member.msa.edutdc.com subrecommend.msa.edutdc.com mygrp.msa.edutdc.com mysub.msa.edutdc.com transfer.msa.edutdc.com
+    ```   
+
+  - Eureka에 서비스 등록 확인
+    브라우저에서 eureka주소로 접근 합니다. eureka주소는 deploy/subride/eureka.yaml에 지정되어 있습니다.   
+    EUREKA, MEMBER-SERVICE, MYGRP-SERVICE, MYSUB-SERVICE, SCG, SUBRECOMMEND-SERVICE,
+    TRANSFER-SERVICE라는 이름으로 총 7개의 서비스가 등록 되어야 합니다.
+    약간 시간이 걸립니다. 모든 서비스가 등록될때까지 기다리셨다가 다음 단계를 진행 합니다.  
+
+  - 브라우저에서 Frontend 주소로 접근
+    'SIGN UP'버튼을 눌러 회원가입을 먼저 합니다.
+    id는 아무거나 등록해도 상관 없지만 테스트 지출 데이터가 user01 ~ user05에 대해 생성되어 있으므로,
+    테스트를 위해 이 5개 계정 중 하나로 등록합니다.
+    
 
 ## 배포 객체 삭제 
 아래 명령으로 모든 객체를 삭제 합니다.  
