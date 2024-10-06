@@ -59,7 +59,7 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
     sed -i'' "s@docker.io/hiondal@docker.io/gappa@g" config.yaml
     ```
 
-    image tag명도 위 docker-compose와 동일하게 바꿉니다.
+    image tag명도 위 build.yaml과 동일하게 바꿉니다.
     ```
     sed -i'' "s/:2.0.0/:1.0.0/g" config.yaml
     ```
