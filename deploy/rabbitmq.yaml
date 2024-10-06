@@ -39,8 +39,8 @@ spec:
           requests:
             cpu: 128m
             memory: 128Mi
-      serviceAccount: sa-ondal
-      serviceAccountName: sa-ondal
+      serviceAccount: default
+      serviceAccountName: default
 ---
 apiVersion: v1
 kind: Service
