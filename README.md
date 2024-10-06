@@ -42,15 +42,28 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
 - config: environment하위의 'GIT'으로 시작하는 Config 저장소 관련 변수 수정
 
 ### deploy/ 하위 배포 yaml 파일
+- deploy디렉토리로 이동
+  ```
+  cd deploy
+  ```
 - mysql.yaml: Helm chart로 배포하기 위한 custom values
   - storageClass: Dynamic provisioning이 설정된 Storage class명으로 지정  
   - auth 항목 밑의 설정. 이 값은 .env와 일치해야 함. replicationPassword는 적절히 지정. 
 - rabbitmq.yaml: 
   - 환경변수 RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS를 .env와 동일하게 지정. 
-  - namespace를 배포할 namespace로 변경.  
+  - namespace를 배포할 namespace로 변경.
+    ```
+    sed -i'' "s/namespace:.*/namespace: ondal/g" rabbitmq.yaml
+    ```
+    
 - subride하위의 yaml
+  - subride디렉토리로 이동
+    ```
+    cd subride
+    ```
   - 공통 수정: namespace, ingress host, image경로를 일괄적으로 수정(아래 예제 참조)  
-    모든 yaml에 대해 수행함. 아래는 namespace를 'ondal'로,  
+    **모든 yaml파일에 대해 수행**함.
+    아래는 namespace를 'ondal'로,  
     ingress domain을 'cna.com'으로,   
     image 경로에서 organization을 바꾸는 예시임.  
     ```
@@ -63,7 +76,6 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
     ```
     sed -i'' "s/:2.0.0/:1.0.0/g" config.yaml
     ```
-
 
   - config.yaml
     - ConfigMap의 'GIT_'으로 시작하는 Config 저장소 관련 변수 수정
