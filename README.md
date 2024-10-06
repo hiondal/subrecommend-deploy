@@ -28,6 +28,16 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
 우리는 k8s에서 배포할 것이므로 image 빌드 부분만 사용합니다.   
 
 - 공통 수정 내용: image 경로를 본인의 것으로 변경  
+  ```  
+  sed -i'' "s@docker.io/hiondal@docker.io/gappa@g" docker-compose.yaml
+  ```
+  
+  image tag명도 필요시 변경합니다.  
+  ``` 
+  sed -i'' "s@image: .*:2.0.0@image: .*:1.0.0@g" docker-compose.yaml
+  ```
+
+
 - config: environment하위의 'GIT'으로 시작하는 Config 저장소 관련 변수 수정
 
 ### deploy/ 하위 배포 yaml 파일
@@ -41,16 +51,16 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
   - 공통 수정: namespace, ingress host, image경로를 일괄적으로 수정(아래 예제 참조)  
     모든 yaml에 대해 수행함. 아래는 namespace를 'ondal'로,  
     ingress domain을 'cna.com'으로,   
-    image 경로에서 organization과 tag를 바꾸는 예시임.  
+    image 경로에서 organization을 바꾸는 예시임.  
     ```
     sed -i'' "s/namespace:.*/namespace: ondal/g" config.yaml
     sed -i'' "s/msa.edutdc.com/cna.com/g" config.yaml
-
+    sed -i'' "s@docker.io/hiondal@docker.io/gappa@g" config.yaml
     ```
 
-    image 경로 변경은 아래 예제를 참조하며, 각 파일마다 경로명은 바꿔야 함
+    image tag명도 위 docker-compose와 동일하게 바꿉니다.
     ```
-    sed -i'' "s@docker.io/hiondal/.*:.*@docker.io/ondal/config:2.0.0@g" config.yaml
+    sed -i'' "s@image: .*:2.0.0@image: .*:1.0.0@g" config.yaml
     ```
 
 
