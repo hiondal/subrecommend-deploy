@@ -293,8 +293,6 @@ services:
   subride-front:
     build:
       context: .
-      #주의:src디렉토리 밑에 server.js파일 있어야 함 
-      #dockerfile: buildfile/Dockerfile_react_nginx
       dockerfile: buildfile/Dockerfile_react_express
       args:
         - PROJECT_FOLDER=subride-front

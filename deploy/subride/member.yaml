@@ -93,6 +93,9 @@ metadata:
 type: Opaque
 stringData:
   RABBITMQ_PASSWORD: guest
+  DB_PASSWORD: P@ssw0rd$ 
+  JWT_SECRET: 8O2HQ13etL2BWZvYOiWsJ5uWFoLi6NBUG8divYVoCgtHVvlk3dqRksMl16toztDUeBTSIuOOPvHIrYq11G2BwQ==
+
 ---
 apiVersion: v1
 kind: Service

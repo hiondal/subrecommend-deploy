@@ -8,7 +8,7 @@ auth:
   rootPassword: "P@ssw0rd$"
   createDatabase: true
   database: "mydb"
-  username: "u00"
+  username: "myuser"
   password: "P@ssw0rd$"
   ##
   replicationUser: replicator
