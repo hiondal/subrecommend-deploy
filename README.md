@@ -184,8 +184,8 @@ build.yaml이 있는 디렉토리에서 수행
 
   - Eureka에 서비스 등록 확인
     브라우저에서 eureka주소로 접근 합니다. eureka주소는 deploy/subride/eureka.yaml에 지정되어 있습니다.   
-    EUREKA, MEMBER-SERVICE, MYGRP-SERVICE, MYSUB-SERVICE, SCG, SUBRECOMMEND-SERVICE,
-    TRANSFER-SERVICE라는 이름으로 총 7개의 서비스가 등록 되어야 합니다.
+    MEMBER-SERVICE, MYGRP-SERVICE, MYSUB-SERVICE, SCG, SUBRECOMMEND-SERVICE,
+    TRANSFER-SERVICE라는 이름으로 총 6개의 서비스가 등록 되어야 합니다.
     약간 시간이 걸립니다. 모든 서비스가 등록될때까지 기다리셨다가 다음 단계를 진행 합니다.  
 
   - 브라우저에서 Frontend 주소로 접근
