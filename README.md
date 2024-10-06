@@ -71,8 +71,18 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
 
 ## Jar파일 Build
 build.yml이 있는 디렉토리로 이동하여 수행   
+
+먼저 Spring Cloud 프로젝트, Subride backend, Subride frontend 소스를 clone합니다.   
 ```
 cd ~/install/subride
+git clone https://github.com/cna-bootcamp/sc.git
+git clone https://github.com/cna-bootcamp/subride.git
+git clone https://github.com/cna-bootcamp/subride-front.git
+
+```
+
+jar파일을 생성합니다.  
+```
 docker-compose -f build.yml up
 ```
 
