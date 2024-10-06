@@ -207,3 +207,27 @@ kubectl delete -f deploy/rabbitmq.yaml
 kubectl delete -f deploy/subride  
 ```
 
+PVC를 삭제합니다.  
+```
+kubectl get pvc
+kubectl delete pvc data-mysql-primary-0 data-mysql-secondary-0
+```
+
+PV를 삭제합니다.  
+PVC 목록에서 'VOLUME'항목에 있는 값이 PV이름입니다. 
+```
+kubectl delete pv {PV이름}
+```
+
+> Tip: PV상태가 'Released'인 PV를 한꺼번에 삭제할 수도 있습니다.
+  ```
+  kubectl get pv -o json | jq -r '.items[] | select(.status.phase=="Released") | .metadata.name' | xargs kubectl delete pv
+  ``` 
+
+NFS Dynamic provisioning으로 자동 생성된 물리적 볼륨도 삭제 합니다.   
+데이터가 영구적으로 삭제 되므로 주의해서 삭제하시기 바랍니다.   
+물리적 볼륨 디렉토리는 NFS서버가 설치된 머신에 있으며 그 디렉토리는 설정했을 때 지정 했습니다.  
+본인이 인프라까지 관리 안 한다면 인프라 관리자에게 요청해야 합니다.  
+
+
+
