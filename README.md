@@ -1,6 +1,8 @@
 # 구독관리 서비스 배포 가이드
 이 가이드는 구독관리 서비스의 Front, Backend, Spring Cloud 서버를 배포하는 방법을 안내 합니다.   
 
+![subride.png]
+
 ## 배포 가이드 클론
 Docker, Docker Compose, Kubectl이 설치된 작업 머신에 배포 가이드를 클론합니다.  
 이 작업 머신은 k8s cluster에 애플리케이션을 배포할 수 있도록 환경이 구성되어 있어야 합니다.  
