@@ -1,5 +1,5 @@
 # 구독관리 서비스 배포 가이드
-이 가이드는 최종 완료된 구독관리 서비스의 Front, Backend, Spring Cloud 서버를 배포하는 방법을 안내 합니다.   
+이 가이드는 구독관리 서비스의 Front, Backend, Spring Cloud 서버를 배포하는 방법을 안내 합니다.   
 
 ## 배포 가이드 클론
 Docker, Docker Compose, Kubectl이 설치된 작업 머신에 배포 가이드를 클론합니다.  
@@ -14,7 +14,8 @@ git clone https://github.com/cna-bootcamp/subride-deploy.git
 ### 환경변수 .env 파일
 - FRONT_HOST: Backend application에 API를 요청하는 Front 주소. CORS설정을 위해 필요.   
 - MYSQL, RabbitMQ 관련 환경변수: 이 값을 변경하면 k8s배포 시 mysql.yaml, rabbitmq.yaml도 수정해야 함      
-* 사실 이 변수는 로컬에서 container로 실행할 때 필요한 값이라, k8s배포만 한다면 수정 안해도 됨.  
+> Tip
+  사실 이 변수는 로컬에서 container로 실행할 때 필요한 값이라, k8s배포만 한다면 수정 안해도 됨.  
 
 ### Jar생성 정의 파일 build.yml
 Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 생성하는   
