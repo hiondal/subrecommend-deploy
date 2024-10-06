@@ -104,9 +104,14 @@ build.yaml이 있는 디렉토리에서 수행
   ```
   docker-compose -f build.yaml build
   ```
+- 이미지 저장소에 로그인
+
+  ```
+  docker login -u {user id}
+  ```
+
 - Push image
   ```
-  docker login 
   docker-compose -f build.yaml push
   ```
 > Tip: 서비스명은 build.yaml의 'service'섹션 하위에 정의된 이름 사용   
