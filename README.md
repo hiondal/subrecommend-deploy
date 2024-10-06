@@ -55,7 +55,8 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
     ```
     sed -i'' "s/namespace:.*/namespace: ondal/g" rabbitmq.yaml
     ```
-    
+  - serviceAccount, serviceAccountName: 별도 Service Account를 만들었으면 변경  
+   
 - subride하위의 yaml
   - subride디렉토리로 이동
     ```
@@ -91,7 +92,7 @@ Docker Compose로 Spring Cloud와 Subride backend application의 jar파일을 �
     - Secret의 DB_PASSWORD: mysql.yaml에서 지정한 값과 동일해야 함
   - scg.yaml
     - ConfigMap의 'ALLOWED_ORIGINS'. Backend application에 API를 요청하는 Front 주소. CORS설정을 위해 필요.   
-
+  
 ## Jar파일 Build
 build-jar.yaml이 있는 디렉토리로 이동하여 수행   
 
