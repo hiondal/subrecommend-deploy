@@ -139,12 +139,12 @@ build.yaml이 있는 디렉토리에서 수행
 - MySQL배포
 
   ```
-  helm upgrade mysql -i -f mysql.yaml bitnami/mysql  
+  helm upgrade mysql -i -f deploy/mysql.yaml bitnami/mysql  
   ```
 
 - RabbitMQ 배포
   ```
-  kubectl apply -f rabbitmq.yaml 
+  kubectl apply -f deploy/rabbitmq.yaml 
   ```
 
 - 구독관리 서비스, Spring cloud 배포  
