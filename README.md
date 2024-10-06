@@ -6,7 +6,7 @@ Docker, Docker Compose, Kubectl이 설치된 작업 머신에 배포 가이드�
 이 작업 머신은 k8s cluster에 애플리케이션을 배포할 수 있도록 환경이 구성되어 있어야 합니다.  
 
 ```
-mkdir -p ~/install/subride && cd ~/install/subride
+mkdir -p ~/install && cd ~/install
 git clone https://github.com/cna-bootcamp/subride-deploy.git
 ```
 
@@ -84,7 +84,7 @@ build.yml이 있는 디렉토리로 이동하여 수행
 
 먼저 Spring Cloud 프로젝트, Subride backend, Subride frontend 소스를 clone합니다.   
 ```
-cd ~/install/subride
+cd ~/install/subride-deploy
 git clone https://github.com/cna-bootcamp/sc.git
 git clone https://github.com/cna-bootcamp/subride.git
 git clone https://github.com/cna-bootcamp/subride-front.git
