@@ -1,0 +1,114 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config
+  namespace: user00
+  labels:
+    app: config
+spec:
+  selector:
+    matchLabels:
+      app: config
+  replicas: 1
+  template:
+    metadata:
+      name: config
+      labels:
+        app: config
+    spec:
+      serviceAccount: sa-user00
+      imagePullSecrets:
+        - name: dockerhub
+      volumes:
+      - name: github-chain
+        secret:
+          secretName: github-chain
+      containers:
+        - name: config
+          image: docker.io/hiondal/config:1.0.0
+          imagePullPolicy: Always
+          env:
+          - name: JAVA_OPTS
+            #value: "-Djavax.net.ssl.trustStore=/etc/ssl/certs/github-chain.pem -Djavax.net.ssl.trustStoreType=PEM"
+            value: "-Djavax.net.ssl.trustStore=/usr/local/share/ca-certificates/github-chain.crt"
+          envFrom:
+          - configMapRef:
+              name: config
+          - secretRef:
+              name: config
+          ports:
+            - name: container-port
+              containerPort: 18080
+          resources:
+            requests:
+              cpu: 256m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+
+          volumeMounts:
+          - name: github-chain
+            #mountPath: /etc/ssl/certs/github-chain.pem
+            mountPath: /usr/local/share/ca-certificates/github-chain.crt
+            subPath: github-chain
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: config
+  namespace: user00
+data:
+  SERVER_PORT: "18080"
+    #GIT_URL: https://github.com:443/hiondal/subride-config.git
+  GIT_URL: https://github.com/hiondal/subride-config.git
+  GIT_USERNAME: hiondal
+  GIT_BRANCH: main
+  SPRING_CLOUD_CONFIG_SERVER_GIT_SKIPSSLERROR: "true"  
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: config
+  namespace: user00
+type: Opaque
+stringData:
+  GIT_TOKEN: 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
+  ENCRYPT_KEY: CL4cboqlIweOqt93wjzZi/qjCxcSOYAMgzdKiy6cG2Y=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config
+  namespace: user00
+spec:
+  type: ClusterIP
+  selector:
+    app: config
+  ports:
+    - name: config
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: config
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: user00.config.msa.edutdc.com
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: config
+                port: 
+                  number: 18080

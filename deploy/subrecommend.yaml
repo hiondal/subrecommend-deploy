@@ -1,0 +1,144 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subrecommend
+  namespace: user00
+  labels:
+    app: subrecommend
+spec:
+  selector:
+    matchLabels:
+      app: subrecommend
+  replicas: 1
+  template:
+    metadata:
+      name: subrecommend
+      labels:
+        app: subrecommend
+    spec:
+      imagePullSecrets:
+        - name: dockerhub
+      containers:
+        - name: subrecommend
+          image: docker.io/hiondal/subrecommend:2.0.0
+          imagePullPolicy: Always
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: APPLICATION_NAME
+              value: subrecommend
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+          - configMapRef:
+              name: subride
+          - configMapRef:
+              name: subrecommend
+          - secretRef:
+              name: subride
+          ports:
+            - name: container-port
+              containerPort: 18080
+          resources:
+            requests:
+              cpu: 256m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: subride
+  namespace: user00
+data:
+  CONFIG_SERVER_FQDN: http://config:18080
+  EUREKA_SERVERS: http://eureka:18080/eureka/
+  DB_DRIVER: com.mysql.cj.jdbc.Driver
+  FRONT_HOST: http://user00.subride-front.msa.edutdc.com
+  RABBITMQ_HOST: rabbitmq
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_USERNAME: guest
+  JWT_EXPIRATION_TIME: "36000"
+  REFRESH_TOKEN_EXPIRATION_TIME: "360000"
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: subride
+  namespace: user00
+type: Opaque
+stringData:
+  RABBITMQ_PASSWORD: guest
+  DB_PASSWORD: P@ssw0rd$ 
+  JWT_SECRET: 8O2HQ13etL2BWZvYOiWsJ5uWFoLi6NBUG8divYVoCgtHVvlk3dqRksMl16toztDUeBTSIuOOPvHIrYq11G2BwQ==
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: subrecommend
+  namespace: user00
+data:
+  SPRING_APPLICATION_NAME: subrecommend-service
+  HOSTNAME: subrecommend
+  SERVER_PORT: "18080"
+  DB_URL: jdbc:mysql://mysql-primary-headless:3306/subrecommend?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: subrecommend
+  namespace: user00
+spec:
+  type: ClusterIP
+  selector:
+    app: subrecommend
+  ports:
+    - name: subrecommend
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: subrecommend-headless
+  namespace: user00
+spec:
+  clusterIP: None
+  selector:
+    app: subrecommend
+  ports:
+    - name: subrecommend
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: subrecommend
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: user00.subrecommend.msa.edutdc.com
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: subrecommend
+                port: 
+                  number: 18080
