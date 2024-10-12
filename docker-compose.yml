@@ -1,0 +1,47 @@
+services:
+  subride-front:
+    build:
+      context: .
+      dockerfile: buildfile/Dockerfile_react_express
+      args:
+        - PROJECT_FOLDER=subride-front
+        - BUILD_FOLDER=buildfile
+        - EXPORT_PORT=3000
+        - REACT_APP_API_BASE_URL=${SCG_FQDN}    
+    image: docker.io/${IMAGE_ORG}/subride-front:${IMAGE_VERSION}
+
+  config:
+    build:
+      context: ./sc/config
+      dockerfile: ../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=config.jar
+    image: docker.io/${IMAGE_ORG}/config:${IMAGE_VERSION}
+      
+  eureka:  
+    build:
+      context: ./sc/eureka
+      dockerfile: ../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=eureka.jar
+    image: docker.io/${IMAGE_ORG}/eureka:${IMAGE_VERSION}
+
+  scg:
+    build:
+      context: ./sc/scg
+      dockerfile: ../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=scg.jar
+    image: docker.io/${IMAGE_ORG}/scg:${IMAGE_VERSION}
+
+  subrecommend:
+    build:
+      context: ./subrecommend/subrecommend-infra
+      dockerfile: ../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=subrecommend.jar
+    image: docker.io/${IMAGE_ORG}/subrecommend:${IMAGE_VERSION}

@@ -22,12 +22,9 @@ primary:
     size: 100m
   ##
   service:
-    type: NodePort
+    type: ClusterIP
     ports:
       mysql: 3306
-    ##
-    nodePorts:
-      mysql: "32700"
 
 secondary:
   name: secondary

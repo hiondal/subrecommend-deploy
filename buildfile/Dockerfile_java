@@ -24,3 +24,4 @@ ENTRYPOINT [ "sh", "-c" ]
 USER ${USERNAME}
 #CMD [ "java --Dspring.profiles.active=${PROFILE} -jar ${ARTIFACTORY_FILE}" ]
 CMD [ "java -jar ${ARTIFACTORY_FILE}" ]
+
