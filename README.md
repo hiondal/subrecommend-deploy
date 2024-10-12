@@ -56,7 +56,7 @@ docker-compose build
 docker-compose push
 ```
 
-## 패포 준비  
+## 배포 준비  
 배포할 namespace로 이동합니다. 아직 namespace를 생성 안했으면 생성 후 이동합니다.  
 ```
 kubectl create ns {namespace}
