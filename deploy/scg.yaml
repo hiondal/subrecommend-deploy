@@ -105,7 +105,6 @@ kind: Ingress
 metadata:
   name: scg
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
@@ -113,7 +112,7 @@ spec:
     - host: user00.scg.msa.edutdc.com
       http:
         paths:
-          - path: /(.*)
+          - path: /
             pathType: Prefix
             backend:
               service:
