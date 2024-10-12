@@ -1,6 +1,6 @@
 services:
   #jar파일 생성  
-  gradle-build-sc:
+  sc:
     image: gradle:jdk22-alpine
     volumes:
       - ./sc:/home/gradle/sc
@@ -18,7 +18,7 @@ services:
         fi;
       done'
 
-  gradle-build-subrecommend:
+  subrecommend:
     image: gradle:jdk22-alpine
     volumes:
       - ./subrecommend:/home/gradle/subrecommend
