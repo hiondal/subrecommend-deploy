@@ -1,5 +1,6 @@
 # Subrecommend deploy with k8s
 
+
 ## 준비
 - 작업할 VM 로그인
   ```
@@ -83,38 +84,21 @@ helm upgrade mysql -i -f mysql-helm-values.yaml bitnami/mysql
 ```
 
 ## 배포 yaml 수정 
-deploy 디렉토리로 이동 합니다.  
-```
-cd deploy 
-```
 
-각 yaml파일에서 namespace와 ingress host를 변경합니다. 
+deploy디렉토리에 있는 배포 yaml을 수정합니다.   
+update-yaml.sh을 실행하고 namespace, image organization, image tag를 지정합니다.  
 ```
-sed -i'' "s/user00/user15/g" config.yaml
-sed -i'' "s/user00/user15/g" eureka.yaml
-sed -i'' "s/user00/user15/g" front.yaml
-sed -i'' "s/user00/user15/g" scg.yaml
-sed -i'' "s/user00/user15/g" subrecommend.yaml
+./update-yaml.sh
 ```
+이 shell은 아래 수행을 합니다. 
+- 각 yaml파일에서 namespace와 ingress host를 변경합니다. 
+- 각 파일에서 image full path를 변경 합니다.  
 
-image명의 Organization과 tag 변수 지정  
-본인에 맞게 수정합니다.  
-```
-IMAGE_ORG=gappa
-IMAGE_VERSION=2.0.0
-```
-
-각 파일에서 image full path를 변경 합니다.  
-```
-sed -i'' "s@docker.io/hiondal/.*@docker.io/${IMAGE_ORG}/config:${IMAGE_VERSION}@g" config.yaml
-sed -i'' "s@docker.io/hiondal/.*@docker.io/${IMAGE_ORG}/eureka:${IMAGE_VERSION}@g" eureka.yaml
-sed -i'' "s@docker.io/hiondal/.*@docker.io/${IMAGE_ORG}/subride-front:${IMAGE_VERSION}@g" front.yaml
-sed -i'' "s@docker.io/hiondal/.*@docker.io/${IMAGE_ORG}/scg:${IMAGE_VERSION}@g" scg.yaml
-sed -i'' "s@docker.io/hiondal/.*@docker.io/${IMAGE_ORG}/subrecommend:${IMAGE_VERSION}@g" subrecommend.yaml
-```
-
-config.yaml과 Secret 정의에서 Git 관련 설정값을 변경 합니다.  
+config.yaml의 ConfigMap과 Secret 정의에서 Git 관련 설정값을 변경 합니다.  
 GIT_URL, GIT_USERNAME, GIT_TOKEN
+```
+vi deploy/config.yaml
+```
 
 ## 배포 
 image pulling을 위한 Secret객체 생성  
@@ -124,7 +108,6 @@ kubectl create secret docker-registry dockerhub --docker-server=docker.io --dock
 
 yaml파일이 있는 deploy디렉토리를 지정하여 한꺼번에 배포합니다.  
 ```
-cd ..
 kubectl apply -f deploy
 ```
 

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: subride-front
-  namespace: user00
+  namespace: user15
   labels:
     app: subride-front
 spec:
@@ -20,7 +20,7 @@ spec:
         - name: dockerhub
       containers:
         - name: subride-front
-          image: docker.io/hiondal/subride-front:2.0.0
+          image: docker.io/gappa/subride-front:2.0.0
           imagePullPolicy: Always
           envFrom:
           - configMapRef:
@@ -42,7 +42,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: subride-front
-  namespace: user00
+  namespace: user15
 data:
   TOKEN_REQUEST_INTERVAL: "1800000"
   IDLE_TIME: "600000"
@@ -51,7 +51,7 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: subride-front
-  namespace: user00
+  namespace: user15
 type: Opaque
 stringData:
 ---
@@ -59,7 +59,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: subride-front
-  namespace: user00
+  namespace: user15
 spec:
   type: ClusterIP
   selector:
@@ -78,7 +78,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: user00.subride-front.msa.edutdc.com
+    - host: user15.subride-front.msa.edutdc.com
       http:
         paths:
           - path: /

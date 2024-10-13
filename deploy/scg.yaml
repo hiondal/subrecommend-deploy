@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: scg
-  namespace: user00
+  namespace: user15
   labels:
     app: scg
 spec:
@@ -20,7 +20,7 @@ spec:
         - name: dockerhub
       containers:
         - name: scg
-          image: docker.io/hiondal/scg:2.0.0
+          image: docker.io/gappa/scg:2.0.0
           imagePullPolicy: Always
           env:
             - name: HOSTNAME
@@ -55,18 +55,18 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: scg
-  namespace: user00
+  namespace: user15
 data:
   HOSTNAME: scg
   SERVER_PORT: "18080"
   EUREKA_SERVERS: http://eureka:18080/eureka/
-  ALLOWED_ORIGINS: http://user00.subride-front.msa.edutdc.com
+  ALLOWED_ORIGINS: http://user15.subride-front.msa.edutdc.com
 ---
 kind: Secret
 apiVersion: v1
 metadata:
   name: scg
-  namespace: user00
+  namespace: user15
 type: Opaque
 stringData:
   JWT_SECRET: 8O2HQ13etL2BWZvYOiWsJ5uWFoLi6NBUG8divYVoCgtHVvlk3dqRksMl16toztDUeBTSIuOOPvHIrYq11G2BwQ==
@@ -75,7 +75,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: scg
-  namespace: user00
+  namespace: user15
 spec:
   type: ClusterIP
   selector:
@@ -89,7 +89,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: scg-headless
-  namespace: user00
+  namespace: user15
 spec:
   type: ClusterIP
   clusterIP: None
@@ -109,7 +109,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: user00.scg.msa.edutdc.com
+    - host: user15.scg.msa.edutdc.com
       http:
         paths:
           - path: /
