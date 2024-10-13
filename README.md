@@ -37,10 +37,21 @@ git clone https://github.com/hiondal/subrecommend.git
 
 
 ## Build jar
+기존에 실행중인 build 프로세스가 있을 수 있으므로 삭제 합니다.  
+```
+docker-compose -f buildjar.yml down --remove-orphans
+```
+
+
 SC, Subrecommend의 jar를 새로 생성합니다.  
 subride-front의 image만 만드는 경우는 불필요 합니다.  
 ```
 docker-compose -f buildjar.yml up
+```
+
+build 프로세스를 중지합니다.  
+```
+docker-compose -f buildjar.yml down 
 ```
 
 ## Build image
