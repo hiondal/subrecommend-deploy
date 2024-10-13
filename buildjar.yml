@@ -2,6 +2,7 @@ services:
   #jar파일 생성  
   sc:
     image: gradle:jdk22-alpine
+    restart: "no"
     volumes:
       - ./sc:/home/gradle/sc
     working_dir: /home/gradle/sc
@@ -20,6 +21,7 @@ services:
 
   subrecommend:
     image: gradle:jdk22-alpine
+    restart: "no"
     volumes:
       - ./subrecommend:/home/gradle/subrecommend
     working_dir: /home/gradle/subrecommend

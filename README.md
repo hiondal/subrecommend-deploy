@@ -131,8 +131,9 @@ kubectl apply -f deploy
 
 모든 Pod가 실행될때까지 기다립니다.  
 ```
-kubectl get po -w
+watch kubectl get po
 ```
+모든 Pod가 Running상태이고 Ready가 되면 CTRL-C를 눌러 Pod상태 보기를 중지합니다.  
 
 subride-front 주소를 확인합니다.  
 ```

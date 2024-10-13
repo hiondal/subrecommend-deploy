@@ -39,6 +39,22 @@ spec:
             limits:
               cpu: 500m
               memory: 1024Mi
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 18080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 18080
+              scheme: HTTP
+            initialDelaySeconds: 10    
+            periodSeconds: 10
+            failureThreshold: 3
 
 ---
 kind: ConfigMap

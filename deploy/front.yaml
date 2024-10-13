@@ -37,6 +37,30 @@ spec:
             limits:
               cpu: 500m
               memory: 1024Mi
+          startupProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  curl -s -f -o /dev/null http://user00.eureka.msa.edutdc.com/eureka/apps/subrecommend-service
+            initialDelaySeconds: 10    
+            failureThreshold: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            failureThreshold: 3
 ---
 kind: ConfigMap
 apiVersion: v1

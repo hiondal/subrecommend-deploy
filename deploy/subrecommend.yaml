@@ -59,10 +59,26 @@ spec:
               command:
                 - "/bin/sh"
                 - "-c"
-                - "echo > /dev/tcp/mysql-primary-headless/3306 >/dev/null 2 && curl -f ${CONFIG_SERVER_FQDN}/actuator/health"
+                - "echo > /dev/tcp/mysql-primary-headless/3306 >/dev/null 2 && curl -f http://config:18080/actuator/health/readiness"
             initialDelaySeconds: 10
             periodSeconds: 5
             failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 18080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 18080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
 ---
 kind: ConfigMap
 apiVersion: v1
