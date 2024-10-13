@@ -18,7 +18,7 @@ yaml_files=("${DEPLOY_DIR}/config.yaml" "${DEPLOY_DIR}/eureka.yaml" "${DEPLOY_DI
 
 # Update namespace and ingress host in all yaml files
 for file in "${yaml_files[@]}"; do
-  sed -i'' "s/user00/${NAMESPACE}/g" "$file"
+  sed -i'' "s/user[0-9]\{2\}/${NAMESPACE}/g" "$file"
 done
 
 # Update image full path in each yaml file

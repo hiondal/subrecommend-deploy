@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: subrecommend
-  namespace: user15
+  namespace: user00
   labels:
     app: subrecommend
 spec:
@@ -59,18 +59,18 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: subride
-  namespace: user15
+  namespace: user00
 data:
   CONFIG_SERVER_FQDN: http://config:18080
   EUREKA_SERVERS: http://eureka:18080/eureka/
   DB_DRIVER: com.mysql.cj.jdbc.Driver
-  FRONT_HOST: http://user15.subride-front.msa.edutdc.com
+  FRONT_HOST: http://user00.subride-front.msa.edutdc.com
 ---
 kind: Secret
 apiVersion: v1
 metadata:
   name: subride
-  namespace: user15
+  namespace: user00
 type: Opaque
 stringData:
   RABBITMQ_PASSWORD: guest
@@ -82,7 +82,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: subrecommend
-  namespace: user15
+  namespace: user00
 data:
   SPRING_APPLICATION_NAME: subrecommend-service
   HOSTNAME: subrecommend
@@ -93,7 +93,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: subrecommend
-  namespace: user15
+  namespace: user00
 spec:
   type: ClusterIP
   selector:
@@ -107,7 +107,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: subrecommend-headless
-  namespace: user15
+  namespace: user00
 spec:
   clusterIP: None
   selector:
@@ -126,7 +126,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: user15.subrecommend.msa.edutdc.com
+    - host: user00.subrecommend.msa.edutdc.com
       http:
         paths:
           - path: /
