@@ -54,6 +54,15 @@ spec:
             limits:
               cpu: 500m
               memory: 1024Mi
+          startupProbe:
+            exec:
+              command:
+                - "/bin/sh"
+                - "-c"
+                - "echo > /dev/tcp/mysql-primary-headless/3306 >/dev/null 2 && curl -f ${CONFIG_SERVER_FQDN}/actuator/health"
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 5
 ---
 kind: ConfigMap
 apiVersion: v1
