@@ -22,17 +22,24 @@
   ```
 
 ## 소스 다운로드 
+만약 subride-front만 수정해도 된다면, 즉 SCG주소만 변경하는 경우라면,  
+subride-front.git만 clone하십시오.   
+```
+git clone https://github.com/hiondal/subride-front.git
+```
+
+다른 서비스도 새로 image를 만들어야 한다면 모두 clone 하십시오.  
 ```
 git clone https://github.com/hiondal/sc.git
 ```
 ```
 git clone https://github.com/hiondal/subrecommend.git
 ```
-```
-git clone https://github.com/hiondal/subride-front.git
-```
+
 
 ## Build jar
+SC, Subrecommend의 jar를 새로 생성합니다.  
+subride-front의 image만 만드는 경우는 불필요 합니다.  
 ```
 docker-compose -f buildjar.yml up
 ```
@@ -52,9 +59,21 @@ SCG_FQDN=http://user00.scg.msa.edutdc.com
 docker-compose build
 ```
 
+만약 subride-front만 수정해도 된다면, 즉 SCG주소만 변경하는 경우라면,  
+아래와 같이 build-front.yml파일을 이용하세요.  
+```
+docker-compose -f build-front.yml build
+```
+
 ## Push image
 ```
 docker-compose push
+```
+
+만약 subride-front만 push 하는 경우는,  
+아래와 같이 build-front.yml파일을 이용하세요.  
+```
+docker-compose -f build-front.yml push
 ```
 
 ## 배포 준비  

@@ -1,0 +1,11 @@
+services:
+  subride-front:
+    build:
+      context: .
+      dockerfile: buildfile/Dockerfile_react_express
+      args:
+        - PROJECT_FOLDER=subride-front
+        - BUILD_FOLDER=buildfile
+        - EXPORT_PORT=3000
+        - REACT_APP_API_BASE_URL=${SCG_FQDN}    
+    image: docker.io/${IMAGE_ORG}/subride-front:${IMAGE_VERSION}
