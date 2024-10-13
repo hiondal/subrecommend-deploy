@@ -20,7 +20,7 @@ spec:
         - name: dockerhub
       containers:
         - name: subride-front
-          image: docker.io/gappa/subride-front:2.0.0
+          image: docker.io/hiondal/subride-front:2.0.0
           imagePullPolicy: Always
           envFrom:
           - configMapRef:

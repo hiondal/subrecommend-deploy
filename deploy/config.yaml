@@ -22,7 +22,7 @@ spec:
         - name: dockerhub
       containers:
         - name: config
-          image: docker.io/gappa/config:2.0.0
+          image: docker.io/hiondal/config:2.0.0
           imagePullPolicy: Always
           envFrom:
           - configMapRef:

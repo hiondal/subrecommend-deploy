@@ -20,7 +20,7 @@ spec:
         - name: dockerhub
       containers:
         - name: eureka
-          image: docker.io/gappa/eureka:2.0.0
+          image: docker.io/hiondal/eureka:2.0.0
           imagePullPolicy: Always
           env:
             - name: HOSTNAME

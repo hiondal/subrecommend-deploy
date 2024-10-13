@@ -20,7 +20,7 @@ spec:
         - name: dockerhub
       containers:
         - name: scg
-          image: docker.io/gappa/scg:2.0.0
+          image: docker.io/hiondal/scg:2.0.0
           imagePullPolicy: Always
           env:
             - name: HOSTNAME

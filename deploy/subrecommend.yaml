@@ -20,7 +20,7 @@ spec:
         - name: dockerhub
       containers:
         - name: subrecommend
-          image: docker.io/gappa/subrecommend:2.0.0
+          image: docker.io/hiondal/subrecommend:2.0.0
           imagePullPolicy: Always
           env:
             - name: HOSTNAME
