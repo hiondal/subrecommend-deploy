@@ -122,6 +122,7 @@ update-yaml.sh을 실행하고 namespace, image organization, image tag를 지�
 이 shell은 아래 수행을 합니다. 
 - 각 yaml파일에서 namespace와 ingress host를 변경합니다. 
 - 각 파일에서 image full path를 변경 합니다.  
+- 기존의 userXX값을 지정한 namespace값으로 변경합니다.  
 
 config.yaml의 ConfigMap과 Secret 정의에서 Git 관련 설정값을 변경 합니다.  
 GIT_URL, GIT_USERNAME, GIT_TOKEN
