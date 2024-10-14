@@ -16,6 +16,7 @@ spec:
       labels:
         app: subride-front
     spec:
+      serviceAccount: sa-user00
       imagePullSecrets:
         - name: dockerhub
       containers:

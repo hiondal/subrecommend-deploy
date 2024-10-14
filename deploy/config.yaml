@@ -17,7 +17,7 @@ spec:
       labels:
         app: config
     spec:
-      #serviceAccount: sa-user00
+      serviceAccount: sa-user00
       imagePullSecrets:
         - name: dockerhub
       containers:

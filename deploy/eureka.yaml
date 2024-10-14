@@ -16,6 +16,7 @@ spec:
       labels:
         app: eureka
     spec:
+      serviceAccount: sa-user00
       imagePullSecrets:
         - name: dockerhub
       containers:
