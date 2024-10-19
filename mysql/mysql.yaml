@@ -4,7 +4,7 @@ kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
   name: mysql
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -34,7 +34,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: mysql-primary
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -55,7 +55,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: mysql-secondary
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -76,7 +76,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: mysql
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -92,7 +92,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mysql
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -110,7 +110,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-primary
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -156,7 +156,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-secondary
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -202,7 +202,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-primary-headless
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -228,7 +228,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-primary
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -255,7 +255,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-secondary-headless
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -281,7 +281,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-secondary
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -308,7 +308,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql-primary
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
@@ -550,7 +550,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql-secondary
-  namespace: "user00"
+  namespace: "user15"
   labels:
     app.kubernetes.io/instance: mysql
     app.kubernetes.io/managed-by: Helm
